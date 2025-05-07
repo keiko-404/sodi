@@ -16,33 +16,32 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name="usuario")
+@Entity(name = "aplicacion")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Usuario {
+public class Aplicacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="cod_usuario")
-    private int codUsuario;
+    @Column(name = "cod_aplicacion")
+    private int codAplicacion;
 
     @ManyToOne
-    @JoinColumn(name="cod_cliente")
+    @JoinColumn(name = "cod_cliente")
     private Cliente cliente;
-    
-    @Column(name="nombre_usuario")
-    private String nombreUsuario;
 
-    @Column(name="correo")
-    private String correo;
+    @JoinColumn(name = "nombre_aplicacion")
+    private String nombreAplic;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JoinColumn(name = "descripcion")
+    private String descripcion;
+
+    @OneToMany(mappedBy = "aplicacion", cascade = CascadeType.ALL)
     private List<Solicitud> solicitudes;
-    
-    public Usuario(int codUsuario) {
-        this.codUsuario = codUsuario;
-    }
 
+    public Aplicacion(int codAplicacion) {
+        this.codAplicacion = codAplicacion;
+    }
 }

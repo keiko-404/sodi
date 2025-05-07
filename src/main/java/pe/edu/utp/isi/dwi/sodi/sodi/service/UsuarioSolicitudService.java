@@ -68,7 +68,7 @@ public class UsuarioSolicitudService {
         }
 
         if ("desc".equals(direccionOrdenamiento)) {
-            // el comparador trabajo de forma reversa
+            // el comparador trabajo de forma reversa 
             comparator = comparator.reversed();
         }
 
@@ -82,6 +82,7 @@ public class UsuarioSolicitudService {
     
     // buscar por cod usuario
     public Usuario buscarPorCodigoU(String codigo) {
+        //predicado: busca el codigo que se est buscando o sino que me devuelva null
         return usuarios.stream().filter((p) -> p.getCodigo().equals(codigo)).findFirst().orElse(null);
     }
 

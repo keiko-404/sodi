@@ -47,7 +47,8 @@ public class SolicitudController {
         if (solicitud == null) {
             throw new SolicitudNoEncontradoException(codigo);
         }
-
+        
+        //devuelve respuesta y a psolicitudMapper que  pase a DTO una solicitud
         return ResponseEntity.ok(SolicitudMapper.toDTO(solicitud));
 
     }

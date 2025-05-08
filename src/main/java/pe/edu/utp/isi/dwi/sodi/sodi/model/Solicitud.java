@@ -1,5 +1,6 @@
 package pe.edu.utp.isi.dwi.sodi.sodi.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -8,11 +9,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "solicitud")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "solicitud")
 public class Solicitud {
 
     @Id
@@ -22,11 +24,11 @@ public class Solicitud {
 
     @ManyToOne
     @JoinColumn(name = "cod_usuario")
-    private Usuario usuario;
+    private Usuario oUsuario;
 
     @ManyToOne
     @JoinColumn(name = "cod_aplicacion")
-    private Aplicacion aplicacion;
+    private Aplicacion oAplicacion;
 
     @Column(name = "motivo")
     private String motivo;
@@ -43,8 +45,9 @@ public class Solicitud {
     @Column(name = "estado")
     private String estado; //Pendiente, en progreso y finalizado
 
-    @OneToMany(mappedBy = "solicitud", cascade = CascadeType.ALL)
-    private List<Asignacion> asignaciones;
+    @Builder.Default
+    @OneToMany(mappedBy = "oSolicitud", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Asignacion> lAsignaciones= new ArrayList<>();
 
     public Solicitud(int codSolicitud) {
         this.codSolicitud = codSolicitud;

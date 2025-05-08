@@ -1,5 +1,6 @@
 package pe.edu.utp.isi.dwi.sodi.sodi.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -11,16 +12,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "aplicacion")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "aplicacion")
 public class Aplicacion {
 
     @Id
@@ -30,16 +33,17 @@ public class Aplicacion {
 
     @ManyToOne
     @JoinColumn(name = "cod_cliente")
-    private Cliente cliente;
+    private Cliente oCliente;
 
-    @JoinColumn(name = "nombre_aplicacion")
+    @Column(name = "nombre_aplicacion")
     private String nombreAplic;
 
-    @JoinColumn(name = "descripcion")
+    @Column(name = "descripcion")
     private String descripcion;
 
-    @OneToMany(mappedBy = "aplicacion", cascade = CascadeType.ALL)
-    private List<Solicitud> solicitudes;
+    @Builder.Default
+    @OneToMany(mappedBy = "oAplicacion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Solicitud> lSolicitudes = new ArrayList<>();
 
     public Aplicacion(int codAplicacion) {
         this.codAplicacion = codAplicacion;

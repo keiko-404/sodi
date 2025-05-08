@@ -6,11 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "actividad")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "actividad")
 public class Actividad {
 
     @Id
@@ -20,7 +21,7 @@ public class Actividad {
 
     @ManyToOne
     @JoinColumn(name = "cod_asignacion")
-    private Asignacion asignacion;
+    private Asignacion oAsignacion;
 
     @Column(name = "descripcion_actividad")
     private String descripcionAct;

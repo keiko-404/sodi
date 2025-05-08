@@ -1,5 +1,6 @@
 package pe.edu.utp.isi.dwi.sodi.sodi.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.*;
@@ -8,11 +9,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity(name = "colaborador")
 @Builder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "colaborador")
 public class Colaborador {
 
     @Id
@@ -29,8 +31,9 @@ public class Colaborador {
     @Column(name = "correo")
     private String correo;
 
-    @OneToMany(mappedBy = "colaborador", cascade = CascadeType.ALL)
-    private List<Asignacion> asignaciones;
+    @Builder.Default
+    @OneToMany(mappedBy = "oColaborador", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Asignacion> lAsignaciones = new ArrayList<>();
 
     public Colaborador(int codColaborador) {
         this.codColaborador = codColaborador;

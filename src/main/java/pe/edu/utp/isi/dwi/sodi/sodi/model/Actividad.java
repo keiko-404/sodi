@@ -1,5 +1,7 @@
 package pe.edu.utp.isi.dwi.sodi.sodi.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,7 +29,7 @@ public class Actividad {
     private String descripcionAct;
 
     @Column(name = "fecha_actividad")
-    private String fechaActividad;
+    private LocalDateTime fechaActividad;
 
     @Column(name = "tiempo_consumido")
     private double tiempoConsumido;

@@ -26,18 +26,22 @@ public class SolicitudService {
     @Autowired
     private AplicacionRepository aplicacionRepository;
 
+    // LISTAR SOLCICITUDES   ---------------------
     public List<Solicitud> listarSolicitudes() {
         return solicitudRepository.findAll();
     }
 
+    //  BUSCAR POR COD  ---------------------
     public Optional<Solicitud> obtenerPorCodigo(int codSolicitud) {
         return solicitudRepository.findById(codSolicitud);
     }
 
+    // ELIMINAR POR COD  ---------------------
     public void eliminarPorCodigo(int codSolicitud) {
         solicitudRepository.deleteById(codSolicitud);
     }
 
+    // REGISTRAR SOLICITUD LADO USUARI  ---------------------
     public Solicitud registrarSolicitud(SolicitudRequest request) {
 
         Usuario usuario = usuarioRepository.findById(request.getCodUsuario())

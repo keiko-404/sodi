@@ -1,5 +1,6 @@
 package pe.edu.utp.isi.dwi.sodi.sodi.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,14 +41,14 @@ public class Solicitud {
     private String prioridad; //Alto, medio, bajo
 
     @Column(name = "fecha_creacion")
-    private String fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Column(name = "estado")
     private String estado; //Pendiente, en progreso y finalizado
 
     @Builder.Default
     @OneToMany(mappedBy = "oSolicitud", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Asignacion> lAsignaciones= new ArrayList<>();
+    private List<Asignacion> lAsignaciones = new ArrayList<>();
 
     public Solicitud(int codSolicitud) {
         this.codSolicitud = codSolicitud;

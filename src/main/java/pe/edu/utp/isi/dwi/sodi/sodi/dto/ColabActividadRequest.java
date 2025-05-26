@@ -9,15 +9,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SolicitudRequest {
+public class ColabActividadRequest {
+    
 
-    private int codUsuario; // oUsuario
+    private int codSolicitud; //oAsignacion
+    private String descripcionAct;
 
-    private int codAplicacion;  // oAplicacion
+    // private LocalDateTime fechaActividad;
 
-    private String motivo;
-
-    private String tipoSolicitud;
-
-
+    private double tiempoConsumido;
+    
 }

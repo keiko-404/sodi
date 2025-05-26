@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.edu.utp.isi.dwi.sodi.sodi.dto.SolicitudRequest;
-import pe.edu.utp.isi.dwi.sodi.sodi.dto.SolicitudResponseDTO;
+import pe.edu.utp.isi.dwi.sodi.sodi.dto.SolicitudColabResponseDTO;
+import pe.edu.utp.isi.dwi.sodi.sodi.dto.SolicitudUsuarioResponseDTO;
 import pe.edu.utp.isi.dwi.sodi.sodi.exception.SolicitudNoEncontradoException;
 import pe.edu.utp.isi.dwi.sodi.sodi.mapper.SolicitudMapper;
 import pe.edu.utp.isi.dwi.sodi.sodi.model.Solicitud;
@@ -28,19 +29,21 @@ public class SolicitudController {
     private SolicitudService solicitudService;
 
     @GetMapping
-    public List<SolicitudResponseDTO> listarSolicitudes() {
+    public List<SolicitudColabResponseDTO> listarSolicitudes() {
         List<Solicitud> solicitudes = solicitudService.listarSolicitudes();
         return solicitudes.stream()
-                .map(SolicitudMapper::toSolicitudResponseDTO)
+                // vista desde colaborador
+                .map(SolicitudMapper::toSolicitudColabResponseDTO)
                 .collect(Collectors.toList());
     }
 
+    // Esta de lado usuario, cambiar a colab, para usuario y colab se mostrara lista con filtros para usuario !!!!!!!!!!!!!!!!!!!!!!!
     @GetMapping("/{codSolicitud}")
-    public ResponseEntity<SolicitudResponseDTO> obtenerPorCodigo(@PathVariable int codSolicitud) {
+    public ResponseEntity<SolicitudUsuarioResponseDTO> obtenerPorCodigo(@PathVariable int codSolicitud) {
         Solicitud solicitud = solicitudService.obtenerPorCodigo(codSolicitud)
                 .orElseThrow(() -> new SolicitudNoEncontradoException(codSolicitud));
-
-        return ResponseEntity.ok(SolicitudMapper.toSolicitudResponseDTO(solicitud));
+        // vista desde usuario
+        return ResponseEntity.ok(SolicitudMapper.toSolicitudUsuarioResponseDTO(solicitud));
     }
 
     @DeleteMapping("/{codSolicitud}")
@@ -50,10 +53,19 @@ public class SolicitudController {
     }
 
     @PostMapping
-    public ResponseEntity<SolicitudResponseDTO> crearSolicitud(@RequestBody SolicitudRequest solicitudRequest) {
+    public ResponseEntity<SolicitudUsuarioResponseDTO> crearSolicitud(@RequestBody SolicitudRequest solicitudRequest) {
         Solicitud solicitudCreada = solicitudService.registrarSolicitud(solicitudRequest);
-        SolicitudResponseDTO response = SolicitudMapper.toSolicitudResponseDTO(solicitudCreada);
+        SolicitudUsuarioResponseDTO response = SolicitudMapper.toSolicitudUsuarioResponseDTO(solicitudCreada);
         return ResponseEntity.ok(response);
+    }
+
+    // ---------- COLABORADOR
+    @GetMapping("/colaborador/{codColaborador}")
+    public List<SolicitudColabResponseDTO> listarSolicitudesPorColaborador(@PathVariable int codColaborador) {
+        List<Solicitud> solicitudes = solicitudService.listarSolicitudesPorColaborador(codColaborador);
+        return solicitudes.stream()
+                .map(SolicitudMapper::toSolicitudColabResponseDTO)
+                .collect(Collectors.toList());
     }
 
 }

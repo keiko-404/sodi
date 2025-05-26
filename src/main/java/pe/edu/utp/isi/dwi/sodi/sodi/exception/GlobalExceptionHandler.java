@@ -25,4 +25,19 @@ public class GlobalExceptionHandler {
 
         return new ResponseEntity<>(errorBody, HttpStatus.NOT_FOUND);
     }
+
+    // para la actividad, solicitud no ecnontrada por parte del colab
+    public ResponseEntity<Map<String, Object>> handleSolicitudAsignadaNoEncontrada(SolicitudAsignadaNoEncontradaException ex) {
+
+        Map<String, Object> errorBody = new HashMap<>();
+        errorBody.put("timestamp", LocalDateTime.now());
+        errorBody.put("status", HttpStatus.NOT_FOUND.value());
+        errorBody.put("error", "Solicitud asignada no encontrado");
+        errorBody.put("menssage", ex.getMessage());
+
+        return new ResponseEntity<>(errorBody, HttpStatus.NOT_FOUND);
+    }
+
 }
+
+

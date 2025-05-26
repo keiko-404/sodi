@@ -9,15 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SolicitudRequest {
-
-    private int codUsuario; // oUsuario
-
-    private int codAplicacion;  // oAplicacion
-
-    private String motivo;
-
-    private String tipoSolicitud;
-
-
+public class ColaboradorAsignadoDTO {
+    private int codColaborador;
+    private String nombreColab;
+    private String rol;
+    private boolean esCoordinador;
 }

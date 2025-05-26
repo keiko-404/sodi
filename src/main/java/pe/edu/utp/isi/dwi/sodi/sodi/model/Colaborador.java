@@ -22,14 +22,15 @@ public class Colaborador {
     @Column(name = "cod_colaborador")
     private int codColaborador;
 
+    @OneToOne
+    @JoinColumn(name = "cod_cuenta")
+    private Cuenta oCuenta;
+
     @Column(name = "nombre_colab")
     private String nombreColab;
 
     @Column(name = "rol")
-    private String rol;
-
-    @Column(name = "correo")
-    private String correo;
+    private String rol; // Analista, Diseñador, Programador Soporte
 
     @Builder.Default
     @OneToMany(mappedBy = "oColaborador", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -39,5 +40,4 @@ public class Colaborador {
         this.codColaborador = codColaborador;
     }
 
-    
 }

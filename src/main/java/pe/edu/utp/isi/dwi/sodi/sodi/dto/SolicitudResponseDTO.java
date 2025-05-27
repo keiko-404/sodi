@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SolicitudColabResponseDTO {
+public class SolicitudResponseDTO {
 
     private int codSolicitud;
     private String nombreUsuario; //oUsuario

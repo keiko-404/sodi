@@ -45,54 +45,14 @@ public class SolicitudService {
         solicitudRepository.deleteById(codSolicitud);
     }
 
-    // REGISTRAR SOLICITUD LADO USUARI  ---------------------
-    @Transactional // asegura que si algo falla (usuario no existe, error en el guardado), no se persiste nada parcial.
-    public Solicitud registrarSolicitud(SolicitudRequest request) {
 
-        Usuario usuario = usuarioRepository.findById(request.getCodUsuario())
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        Aplicacion aplicacion = aplicacionRepository.findById(request.getCodAplicacion())
-                .orElseThrow(() -> new RuntimeException("Aplicación no encontrada"));
-
-        //crea la solicitud base desde el mapper
-        Solicitud solicitud = SolicitudMapper.toSolicitud(request, usuario, aplicacion);
-
-        // valores automaticos
-        solicitud.setPrioridad(elegirPrioridad(request.getTipoSolicitud()));
-//        solicitud.setPrioridad(Prioridad);
-        solicitud.setEstado("En Progreso");
-        solicitud.setFechaCreacion(LocalDateTime.now());
-
-        // guardar y retrna
-//        return solicitudRepository.save(solicitud);
-        Solicitud solicitudGuardada = solicitudRepository.save(solicitud);
-
-        // delegamos la asignación
-        asignacionService.asignarColaboradores(solicitudGuardada);
-
-        return solicitudGuardada;
-    }
-
-    // es para eliegir la prioirdad dependiendo del tipo de solicitud
-    private String elegirPrioridad(String tipoSolicitud) {
-
-        switch (tipoSolicitud) {
-            case "Error de software":
-                return "Alta";
-            case "Capacitación sobre  uso  del  Software":
-                return "Baja";
-            case "Requerimiento de Software":
-                return "Media";
-            default:
-                return "Media";
-        }
-    }
-
-    
-    
     public List<Solicitud> listarSolicitudesPorColaborador(int codColaborador) {
         return solicitudRepository.findByColaboradorId(codColaborador);
+    }
+
+    public List<Solicitud> buscarPorCorreoUsuario(String correoUsuario) {
+        return solicitudRepository.findByCorreoUsuario(correoUsuario);
     }
 
 }

@@ -22,7 +22,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         Cuenta cuenta = cuentaRepository.findByCorreo(correo)
                 .orElseThrow(() -> new UsernameNotFoundException("Cuenta no encontrada"));
 
-        String nombreRol = cuenta.getORoles().getRol(); // "ADMIN", "COLABORADOR", "USUARIO"
+        String nombreRol = cuenta.getORoles().getRol();
 
         return new User(
                 cuenta.getCorreo(),

@@ -24,15 +24,14 @@ public class SecurityConfig {
     }
 
     @Bean
-    // permite acceder a la url y si es otra direccion, tiene que estar autenticado
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll() // login, registro libre
-                .requestMatchers("/api/admin/**").hasAuthority("Admin") // admin puede crear usuarios, colaboradores
-                .requestMatchers("/api/usuario/**").hasAuthority("Usuario") // usuario puede ver/registrar solicitudes
-                .requestMatchers("/api/colaborador/**").hasAuthority("Colaborador") // colaborador ve solo sus solicitudes
+                .requestMatchers("/api/auth/**").permitAll() 
+                .requestMatchers("/api/admin/**").hasAuthority("Admin") 
+                .requestMatchers("/api/usuario/**").hasAuthority("Usuario") 
+                .requestMatchers("/api/colaborador/**").hasAuthority("Colaborador") 
                 .requestMatchers("/solicitudes/**").hasAnyAuthority("Admin", "Colaborador")
                 .anyRequest().authenticated()
                 )

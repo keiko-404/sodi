@@ -5,17 +5,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SolicitudRequest {
+public class UsuarioDTO {
 
-    private int codAplicacion;  // oAplicacion pasarlo a nombre
-
-    private String motivo;
-
-    private String tipoSolicitud;
-
+    private String correo; // oCuenta
+    private String nombreCliente; // oCliente
+    private String nombreUsuario; //ordenaar
 
 }

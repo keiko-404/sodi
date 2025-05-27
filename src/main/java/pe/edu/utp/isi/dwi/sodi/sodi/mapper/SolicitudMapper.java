@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 import pe.edu.utp.isi.dwi.sodi.sodi.dto.SolicitudRequest;
 import pe.edu.utp.isi.dwi.sodi.sodi.dto.ColaboradorAsignadoDTO;
-import pe.edu.utp.isi.dwi.sodi.sodi.dto.SolicitudColabResponseDTO;
+import pe.edu.utp.isi.dwi.sodi.sodi.dto.SolicitudResponseDTO;
 import pe.edu.utp.isi.dwi.sodi.sodi.dto.SolicitudUsuarioResponseDTO;
 import pe.edu.utp.isi.dwi.sodi.sodi.model.Aplicacion;
 import pe.edu.utp.isi.dwi.sodi.sodi.model.Asignacion;
@@ -68,8 +68,8 @@ public class SolicitudMapper {
 //                .build();
 //    }
     // se ve las solicitudes y el colaborado que se le fue asignado
-    public static SolicitudColabResponseDTO toSolicitudColabResponseDTO(Solicitud solicitud) {
-        SolicitudColabResponseDTO dto = new SolicitudColabResponseDTO();
+    public static SolicitudResponseDTO toSolicitudColabResponseDTO(Solicitud solicitud) {
+        SolicitudResponseDTO dto = new SolicitudResponseDTO();
 
         dto.setCodSolicitud(solicitud.getCodSolicitud());
         dto.setNombreUsuario(solicitud.getOUsuario().getNombreUsuario());

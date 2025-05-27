@@ -14,4 +14,10 @@ public interface SolicitudRepository extends JpaRepository<Solicitud, Integer> {
     @Query("SELECT s FROM Solicitud s JOIN s.lAsignaciones a WHERE a.oColaborador.codColaborador = :codColaborador")
     List<Solicitud> findByColaboradorId(@Param("codColaborador") int codColaborador);
 
+    @Query("SELECT s FROM Solicitud s "
+            + "JOIN FETCH s.oUsuario u "
+            + "JOIN FETCH u.oCuenta c "
+            + "WHERE c.correo = :correo")
+    List<Solicitud> findByCorreoUsuario(@Param("correo") String correo);
+
 }

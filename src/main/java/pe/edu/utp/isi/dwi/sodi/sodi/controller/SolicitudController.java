@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.edu.utp.isi.dwi.sodi.sodi.dto.SolicitudRequest;
-import pe.edu.utp.isi.dwi.sodi.sodi.dto.SolicitudColabResponseDTO;
+import pe.edu.utp.isi.dwi.sodi.sodi.dto.SolicitudResponseDTO;
 import pe.edu.utp.isi.dwi.sodi.sodi.dto.SolicitudUsuarioResponseDTO;
 import pe.edu.utp.isi.dwi.sodi.sodi.exception.SolicitudNoEncontradoException;
 import pe.edu.utp.isi.dwi.sodi.sodi.mapper.SolicitudMapper;
@@ -28,8 +28,9 @@ public class SolicitudController {
     @Autowired
     private SolicitudService solicitudService;
 
+    // admin & colab
     @GetMapping
-    public List<SolicitudColabResponseDTO> listarSolicitudes() {
+    public List<SolicitudResponseDTO> listarSolicitudes() {
         List<Solicitud> solicitudes = solicitudService.listarSolicitudes();
         return solicitudes.stream()
                 // vista desde colaborador
@@ -46,22 +47,24 @@ public class SolicitudController {
         return ResponseEntity.ok(SolicitudMapper.toSolicitudUsuarioResponseDTO(solicitud));
     }
 
+    // admin
     @DeleteMapping("/{codSolicitud}")
     public ResponseEntity<Void> eliminarPorCodigo(@PathVariable int codSolicitud) {
         solicitudService.eliminarPorCodigo(codSolicitud);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping
-    public ResponseEntity<SolicitudUsuarioResponseDTO> crearSolicitud(@RequestBody SolicitudRequest solicitudRequest) {
-        Solicitud solicitudCreada = solicitudService.registrarSolicitud(solicitudRequest);
-        SolicitudUsuarioResponseDTO response = SolicitudMapper.toSolicitudUsuarioResponseDTO(solicitudCreada);
-        return ResponseEntity.ok(response);
-    }
+    // usuario
+//    @PostMapping
+//    public ResponseEntity<SolicitudUsuarioResponseDTO> crearSolicitud(@RequestBody SolicitudRequest solicitudRequest) {
+//        Solicitud solicitudCreada = solicitudService.registrarSolicitud(solicitudRequest);
+//        SolicitudUsuarioResponseDTO response = SolicitudMapper.toSolicitudUsuarioResponseDTO(solicitudCreada);
+//        return ResponseEntity.ok(response);
+//    }
 
-    // ---------- COLABORADOR
+    // ---------- admin
     @GetMapping("/colaborador/{codColaborador}")
-    public List<SolicitudColabResponseDTO> listarSolicitudesPorColaborador(@PathVariable int codColaborador) {
+    public List<SolicitudResponseDTO> listarSolicitudesPorColaborador(@PathVariable int codColaborador) {
         List<Solicitud> solicitudes = solicitudService.listarSolicitudesPorColaborador(codColaborador);
         return solicitudes.stream()
                 .map(SolicitudMapper::toSolicitudColabResponseDTO)

@@ -40,7 +40,7 @@ public class AuthController {
         }
 
         // Obtener el nombre del rol como lista
-        String nombreRol = cuenta.getORoles().getRol(); // por ejemplo: "ROLE_ADMIN"
+        String nombreRol = cuenta.getORoles().getRol().replace("ROLE_", ""); // por ejemplo: "ROLE_ADMIN"
         List<String> roles = Collections.singletonList(nombreRol);
 
         return ResponseEntity.ok(jwtService.generateToken(correo, roles));
